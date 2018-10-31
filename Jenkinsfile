@@ -46,12 +46,11 @@ spec:
   stages {
     stage('Run maven') {
       steps {
+        git branch: 'master',
+          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
         container('maven') {
-          sh 'mvn -version'
+          sh 'mvn -B -DskipTests clean package'
           sh "echo workspace dir is ${pwd()}"
-        }
-        container('busybox') {
-          sh '/bin/busybox'
         }
       }
     }
