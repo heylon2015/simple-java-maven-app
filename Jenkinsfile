@@ -35,19 +35,15 @@ spec:
   ) {
 
   node(label) {
-    stages{
-      stage('Build a Maven project') {
-        git branch: 'master',
-          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
-        container('maven') {
-          steps{
-              sh """
-              mvn -B -DskipTests clean package
-              mkdir -p /data/workspace/${JOB_NAME}/
-              cp ${WORKSPACE}/target/*.jar /data/workspace/${JOB_NAME}/
-              """
-          }
-        }
+    stage('Build a Maven project') {
+      git branch: 'master',
+        url: 'https://github.com/heylon2015/simple-java-maven-app.git'
+      container('maven') {
+        sh """
+        mvn -B -DskipTests clean package
+        mkdir -p /data/workspace/${JOB_NAME}/
+        cp ${WORKSPACE}/target/*.jar /data/workspace/${JOB_NAME}/
+        """
       }
     }
   }
