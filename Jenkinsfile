@@ -2,6 +2,7 @@ pipeline {
   agent {
     kubernetes {
       label 'mypod'
+      customWorkspace '/tmp/'
       defaultContainer 'jnlp'
       yaml """
 apiVersion: v1
@@ -29,6 +30,7 @@ spec:
       steps {
         container('maven') {
           sh 'mvn -version'
+          sh "echo workspace dir is ${pwd()}"
         }
         container('busybox') {
           sh '/bin/busybox'
