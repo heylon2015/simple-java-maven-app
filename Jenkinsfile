@@ -44,10 +44,16 @@ spec:
     }
   }
   stages {
-    stage('Validate') {
+    stage('Checkout') {
       steps {
         git branch: 'master',
           url: 'https://github.com/heylon2015/simple-java-maven-app.git'
+        container('maven') {
+        }
+      }
+    }
+    stage('Validate') {
+      steps {
         container('maven') {
           sh 'mvn validate'
         }
