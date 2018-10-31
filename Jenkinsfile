@@ -36,6 +36,8 @@ spec:
 
   node(label) {
     stage('Build a Maven project') {
+      git branch: 'master',
+        url: 'https://github.com/heylon2015/simple-java-maven-app.git'
       container('maven') {
         sh """
         mvn -B -DskipTests clean package
