@@ -1,7 +1,8 @@
+def mylabel = "maven-docker-${UUID.randomUUID().toString()}"
 pipeline {
   agent {
     kubernetes {
-      label 'maven-docker-${UUID.randomUUID().toString()}'
+      label mylabel
       defaultContainer 'maven'
       yaml """
 apiVersion: v1
