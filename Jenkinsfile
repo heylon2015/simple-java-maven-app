@@ -55,8 +55,6 @@ spec:
     }
     stage('Compile') {
       steps {
-        git branch: 'master',
-          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
         container('maven') {
           sh 'mvn clean compile'
           sh "echo workspace dir is ${pwd()}"
@@ -65,8 +63,6 @@ spec:
     }
     stage('Test') {
       steps {
-        git branch: 'master',
-          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
         container('maven') {
           sh 'mvn clean test'
         }
@@ -74,8 +70,6 @@ spec:
     }
     stage('Package') {
       steps {
-        git branch: 'master',
-          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
         container('maven') {
           sh 'mvn -B -DskipTests clean package'
         }
