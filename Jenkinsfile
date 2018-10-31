@@ -44,13 +44,40 @@ spec:
     }
   }
   stages {
-    stage('Run maven') {
+    stage('Validate') {
+      steps {
+        git branch: 'master',
+          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
+        container('maven') {
+          sh 'mvn validate'
+        }
+      }
+    }
+    stage('Compile') {
+      steps {
+        git branch: 'master',
+          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
+        container('maven') {
+          sh 'mvn clean compile'
+          sh "echo workspace dir is ${pwd()}"
+        }
+      }
+    }
+    stage('Test') {
+      steps {
+        git branch: 'master',
+          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
+        container('maven') {
+          sh 'mvn clean test'
+        }
+      }
+    }
+    stage('Package') {
       steps {
         git branch: 'master',
           url: 'https://github.com/heylon2015/simple-java-maven-app.git'
         container('maven') {
           sh 'mvn -B -DskipTests clean package'
-          sh "echo workspace dir is ${pwd()}"
         }
       }
     }
