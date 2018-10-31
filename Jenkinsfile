@@ -78,5 +78,15 @@ spec:
         }
       }
     }
+    stage('Push') {
+      steps {
+        container('maven') {
+          sh """
+          mkdir -p /data/workspace/${JOB_NAME}
+          cp ${WORKSPACE}/target/*.jar /data/workspace/${JOB_NAME}
+          """
+        }
+      }
+    }
   }
 }
