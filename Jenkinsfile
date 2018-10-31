@@ -46,5 +46,15 @@ spec:
         """
       }
     }
+    stage('Test a Maven project') { 
+        sh """
+        mvn test
+        """ 
+        post {
+           always {
+               junit 'target/surefire-reports/*.xml' 
+           }
+        }
+     }
   }
 }
