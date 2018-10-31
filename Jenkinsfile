@@ -48,8 +48,6 @@ spec:
       steps {
         git branch: 'master',
           url: 'https://github.com/heylon2015/simple-java-maven-app.git'
-        container('maven') {
-        }
       }
     }
     stage('Validate') {
@@ -63,7 +61,6 @@ spec:
       steps {
         container('maven') {
           sh 'mvn clean compile'
-          sh "echo workspace dir is ${pwd()}"
         }
       }
     }
