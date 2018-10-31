@@ -35,26 +35,20 @@ spec:
   ) {
 
   node(label) {
-    stage('Build a Maven project') {
-      git branch: 'master',
-        url: 'https://github.com/heylon2015/simple-java-maven-app.git'
-      container('maven') {
-        sh """
-        mvn -B -DskipTests clean package
-        mkdir -p /data/workspace/${JOB_NAME}/
-        cp ${WORKSPACE}/target/*.jar /data/workspace/${JOB_NAME}/
-        """
+    stages{
+      stage('Build a Maven project') {
+        git branch: 'master',
+          url: 'https://github.com/heylon2015/simple-java-maven-app.git'
+        container('maven') {
+        steps{
+            sh """
+            mvn -B -DskipTests clean package
+            mkdir -p /data/workspace/${JOB_NAME}/
+            cp ${WORKSPACE}/target/*.jar /data/workspace/${JOB_NAME}/
+            """
+        }
+        }
       }
     }
-    stage('Test a Maven project') { 
-        sh """
-        mvn test
-        """ 
-        post {
-           always {
-               junit 'target/surefire-reports/*.xml' 
-           }
-        }
-     }
   }
 }
