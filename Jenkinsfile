@@ -1,26 +1,44 @@
 pipeline {
   agent {
     kubernetes {
-      label 'mypod'
+      label 'maven-docker-${UUID.randomUUID().toString()}'
       defaultContainer 'maven'
       yaml """
 apiVersion: v1
 kind: Pod
-metadata:
-  labels:
-    some-label: some-label-value
 spec:
   containers:
   - name: maven
-    image: maven:alpine
-    command:
-    - cat
+    image: maven:3.3.9-jdk-8-alpine
+    command: ['cat']
     tty: true
-  - name: busybox
-    image: busybox
-    command:
-    - cat
+    volumeMounts:
+    - name: task-pv-storage
+      mountPath: /root/.m2/repository
+      readOnly: false
+    - name: workspace-pv-storage
+      mountPath: /data/workspace
+      readOnly: false
+  - name: docker
+    image: docker:1.13
+    command: ['cat']
     tty: true
+    volumeMounts:
+    - name: dockersock
+      mountPath: /var/run/docker.sock
+    - name: workspace-pv-storage
+      mountPath: /data/workspace
+      readOnly: false
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+  - name: task-pv-storage
+    persistentVolumeClaim:
+      claimName: maven-repo
+  - name: workspace-pv-storage
+    persistentVolumeClaim:
+      claimName: jenkins-workspace
 """
     }
   }
