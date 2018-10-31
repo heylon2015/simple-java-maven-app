@@ -3,7 +3,7 @@ pipeline {
     kubernetes {
       label 'mypod'
       customWorkspace '/tmp/'
-      defaultContainer 'jnlp'
+      defaultContainer 'maven'
       yaml """
 apiVersion: v1
 kind: Pod
