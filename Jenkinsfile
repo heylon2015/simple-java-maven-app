@@ -85,7 +85,7 @@ spec:
     stage('helmcheck') {
       steps {
         container('helm') {
-          sh 'helm version'
+          sh 'helm create test'
         }
       }
     }
