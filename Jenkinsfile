@@ -1,4 +1,4 @@
-def mylabel = "maven-docker-${UUID.randomUUID().toString()}"
+def mylabel = "jenkins-slave-${UUID.randomUUID().toString()}"
 pipeline {
   agent {
     kubernetes {
@@ -10,7 +10,7 @@ kind: Pod
 spec:
   containers:
   - name: helm
-    image: dtzar/helm-kubectl:latest
+    image: dtzar/helm-kubectl:2.11.0
     command: ['cat']
     tty: true
   - name: maven
