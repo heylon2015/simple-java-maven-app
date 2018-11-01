@@ -75,6 +75,7 @@ spec:
       steps {
         container('maven') {
           sh 'mvn -B -DskipTests clean package'
+          sh 'helm version'
         }
       }
     }
