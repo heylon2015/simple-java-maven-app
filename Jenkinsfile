@@ -9,6 +9,10 @@ apiVersion: v1
 kind: Pod
 spec:
   containers:
+  - name: helm
+    image: dtzar/helm-kubectl:latest
+    command: ['cat']
+    tty: true
   - name: maven
     image: maven:3.3.9-jdk-8-alpine
     command: ['cat']
@@ -75,6 +79,12 @@ spec:
       steps {
         container('maven') {
           sh 'mvn -B -DskipTests clean package'
+        }
+      }
+    }
+    stage('helmcheck') {
+      steps {
+        container('helm') {
           sh 'helm version'
         }
       }
