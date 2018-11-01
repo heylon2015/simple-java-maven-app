@@ -85,7 +85,11 @@ spec:
     stage('helmcheck') {
       steps {
         container('helm') {
-          sh 'helm create test'
+          sh """
+          helm create test
+          pwd
+          whoami
+          """
         }
       }
     }
